@@ -17,7 +17,7 @@ import com.unnyweather.android.R
 import kotlinx.android.synthetic.main.fragment_place.*
 
 class PlaceFragment : Fragment() {
-
+//lazy函数懒加载技术来获取PlaceViewModel的实例
     val viewModel by lazy { ViewModelProviders.of(this).get(PlaceViewModel::class.java) }
 
     private lateinit var adapter: PlaceAdapter
@@ -33,6 +33,7 @@ class PlaceFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         adapter = PlaceAdapter(this, viewModel.placeList)
         recyclerView.adapter = adapter
+//监听搜索框内容的变化情况
         searchPlaceEdit.addTextChangedListener { editable: Editable? ->
             val content = editable.toString()
             if (content.isNotEmpty()) {
@@ -44,8 +45,12 @@ class PlaceFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         };
+        //对PlaceViewModel中的placeLiveData对象进行观察，当有任何数据变化时，就会回调到传人的Observer接口实现中。
+        // 对回调的数据进行判断:如果数据不为空，那么就将这些数据添加到PlaceViewModel的placeList集合中， 并通知PlaceAdapter刷新界面;
+        // 如果数据为空，则说明发生了异常，此时弹出一一个Toast提示，
         viewModel.placeLiveData.observe(viewLifecycleOwner, Observer { result ->
             val places = result.getOrNull()
+            //搜索框为空时将RecyclerView隐藏起来
             if (places != null) {
                 recyclerView.visibility = View.VISIBLE
                 bgImageView.visibility = View.GONE

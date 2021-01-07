@@ -15,7 +15,7 @@ import com.unnyweather.android.R;
 import com.unnyweather.android.logic.model.Place;
 
 import java.util.List;
-
+//适配器
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> {
     Fragment fragment;
     List<Place> placeList;

@@ -15,17 +15,19 @@ class PlaceViewModel : ViewModel() {
 // 调用仓库层中定义的searchPlaces()方法 就可以发起网络请求，同时将仓库层返回的LiveData对象转换成一个可 供Activity 观察的LiveData对象。
 //PlaceViewModel中定义了一个placeList集合，用于对界面上显示的城市数据进行缓存，
 // 原则上与界面相关的数据都应该放到ViewModel中，保证它们在手机屏幕发生旋转的时候不会丢失，
-    val placeLiveData = Transformations.switchMap(searchLiveData) { query ->
-        Repository.searchPlaces(query)
-    }
+val placeLiveData = Transformations.switchMap(searchLiveData) { query ->
+    Repository.searchPlaces(query)
+}
 
     fun searchPlaces(query: String) {
         searchLiveData.value = query
     }
+
     fun savePlace(place: Place)=Repository.savePlace(place)
 
     fun getSavedPlace()= PlaceDao.getSavedPlace()
 
     fun isPlaceSaved()= PlaceDao.isPlacesSaved()
+
 
 }

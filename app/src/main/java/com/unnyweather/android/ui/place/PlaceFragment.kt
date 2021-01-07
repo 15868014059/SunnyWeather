@@ -31,6 +31,7 @@ class PlaceFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        //只有当PlaceFragment 被嵌人MainActivity 中，并且之前已经存在选中的城市，此时才会直接跳转到WeatherActivity
         if(activity is MainActivity && viewModel.isPlaceSaved()){
             val place =viewModel.getSavedPlace();
             val intent= Intent(context, WeatherActivity::class.java).apply {

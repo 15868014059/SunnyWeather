@@ -28,6 +28,8 @@ object Repository {
             Result.failure(RuntimeException("response status is ${placeResponse.status}"))
         }
     }
+
+    //
     fun refreshWeather(lng: String, lat: String, placeName: String) = fire(Dispatchers.IO) {
         coroutineScope {
             val deferredRealtime = async {

@@ -27,6 +27,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
 
     @NonNull
     @Override
+    //给place_ item.xml 的最外层布局注册了一个点击事件监听器，在点击事件中获取当前点击项的经纬度坐标和地区名称，并把它们传人Intent中
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -37,6 +38,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             intent.putExtra("location_lng",place.getLocation().getLng());
             intent.putExtra("location_lat",place.getLocation().getLat());
             intent.putExtra("place_name",place.getName());
+            //调用Fragment的startActivity( )方法启动WeatherActivity。
             fragment.startActivity(intent);
         });
         return viewHolder;

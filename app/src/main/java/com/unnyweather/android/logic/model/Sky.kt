@@ -1,7 +1,8 @@
 package com.unnyweather.android.logic.model
 
 import com.unnyweather.android.R
-
+//定义了一个Sky类作为数据模型，它包含了info、 icon 和bg这3个字段，分别表示该天气情况所对应的文字、图标和背景。
+// 使用map0f()函数来定义每种天气代码所应该对应的文字、图标和背景。
 class Sky (val info: String, val icon: Int, val bg: Int)
 
 private val sky = mapOf(
@@ -28,7 +29,7 @@ private val sky = mapOf(
     "FOG" to Sky("雾", R.drawable.ic_fog, R.drawable.bg_fog),
     "DUST" to Sky("浮尘", R.drawable.ic_fog, R.drawable.bg_fog)
     )
-
+// 定义一个getSky()方法来根据天气代码获取对应的Sky对象
 fun getSky(skycon: String): Sky {
     return sky[skycon] ?: sky["CLEAR_DAY"]!!
 }

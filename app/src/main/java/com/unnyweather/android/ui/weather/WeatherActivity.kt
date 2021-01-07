@@ -29,7 +29,7 @@ import java.util.*
 class WeatherActivity : AppCompatActivity() {
 
     val viewModel by lazy { ViewModelProviders.of(this).get(WeatherViewModel::class.java) }
-
+//在onCreate()方法中，首先从Intent中取出经纬度坐标和地区名称，并赋值到WeatherViewModel的相应变量中
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= 21) {
@@ -47,6 +47,7 @@ class WeatherActivity : AppCompatActivity() {
         if (viewModel.placeName.isEmpty()) {
             viewModel.placeName = intent.getStringExtra("place_name") ?: ""
         }
+    //对weatherLiveData对象进行观察，当获取到服务器返回的天气数据时，就调用showWeatherInfo()方法进行解析与展示
         viewModel.weatherLiveData.observe(this, Observer { result ->
             val weather = result.getOrNull()
             if (weather != null) {
@@ -78,12 +79,12 @@ class WeatherActivity : AppCompatActivity() {
             }
         })
     }
-
+//调用了WeatherViewModel 的refreshWeather()方法来执行一次刷新天气的请求。
     fun refreshWeather() {
         viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
         swipeRefresh.isRefreshing = true
     }
-
+//showWeatherInfo()方法中从Weather对象中获取数据，显示到相应的控件上
     private fun showWeatherInfo(weather: Weather) {
         placeName.text = viewModel.placeName
         val realtime = weather.realtime
@@ -122,6 +123,9 @@ class WeatherActivity : AppCompatActivity() {
         ultravioletText.text = lifeIndex.ultraviolet[0].desc
         carWashingText.text = lifeIndex.carWashing[0].desc
         weatherLayout.visibility = View.VISIBLE
+    }
+    fun close(){
+        drawerLayout.closeDrawers();
     }
 
 }
